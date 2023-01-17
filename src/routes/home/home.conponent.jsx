@@ -1,4 +1,5 @@
 import Directory from '../../components/directory/directory.component'
+import { Outlet } from 'react-router-dom'
 
 const Home = () => {
     const categories = [
@@ -30,7 +31,17 @@ const Home = () => {
     ]
 
     return (
-        <Directory categories={categories} />
+        <div>
+            <Outlet />
+            {/* This Outlet is very powerful because the outlet now allows 
+            us to leverage this pattern matching and this nesting tructure 
+            in order to dynamically change portions of our code based on the 
+            roots and the nested roots. we can kind of start to see a pattern
+            emerge where we can keep the navigation bar but just change the 
+            content inside using a specific nesting strategy.
+            */}
+            <Directory categories={categories} />
+        </div>
     )
 }
 
