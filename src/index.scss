@@ -10,3 +10,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// Looking at this div here, let's say that inside of our styles, 
+// let's just imagine that what we did is we added some hard width value 
+// of 50 pixels. So here we see that this has a 50 by 70 dimension.
+// So 50 width, 70 height. If I were to add padding 25 pixels.
+// Now if you highlight it, you see that the actual dimension has gone up to 100 by 120.
+// So the overall width and height of our element has increased by 25 pixels on each side.
+// So you'll actually notice that border and padding will both increase the width of your element.
+// This is not intuitive. What we actually want is for the padding to be accounted for inside 
+// of the actual width and height of the elements that we have.
+// You don't want to add padding and add borders that will modify these values.
+// It just seems unintuitive because if I say that the width of this element is 50 pixels, the which should
+// never change the way that we're going to do this is we're actually going to say that I want this box
+// sizing to be border box this now.

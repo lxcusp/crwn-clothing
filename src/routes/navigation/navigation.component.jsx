@@ -6,21 +6,23 @@ import { Fragment } from 'react'
 // For example, if I just want a div that represents the actual navigation and then I want 
 // the components that represent my pages down below. I don't need a wrapping div. I can just use a fragment.
 // So with this fragment, once it actually finally renders, nothing's going to render on the page.
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
+import './navigation.styles.scss'
+
 
 const Navigation = () => {
   return (
     <Fragment>
       <div className='navigation'>
         <Link className='logo-container' to='/'>
-          <div>Logo</div>
+          <CrwnLogo className='logo' />
         </Link>
 
-        <div className='link-container'>
+        <div className='nav-links-container'>
           <Link className='nav-link' to='/shop'>
             Shop
           </Link>
         </div>
-        <h1>Navi Bar</h1>
       </div>
       <Outlet />
     </Fragment>
