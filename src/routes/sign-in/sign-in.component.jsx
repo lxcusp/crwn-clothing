@@ -3,8 +3,8 @@ import { signInWithGooglePopup, createUserDocumentFromAuth } from "../../utils/f
 const SignIn = () => {
     const logGoogleUser = async () => {
         const { user } = await signInWithGooglePopup();
-        console.log(response); 
-        createUserDocumentFromAuth(user)
+        // console.log(response);
+        const userDocRef = await createUserDocumentFromAuth(user)
     }
     return (
         <div>
