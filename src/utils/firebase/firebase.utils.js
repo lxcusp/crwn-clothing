@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword} from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
@@ -34,6 +34,7 @@ export const db = getFirestore();
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider)
 
 export const createUserDocumentFromAuth = async (userAuth) => {
+    if(!userAuth) return;
     const userDocRef = doc(db, 'users', userAuth.uid);
     console.log(userDocRef);
 
@@ -57,4 +58,11 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     //return userDocRef
     return userDocRef;
 
+}
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return; 
+    //if we didnt receive these, dont run the func, the way to protect our code.
+    //but the later knowledge Typescript will make it lot easier.
+    return await createAuthUserWithEmailAndPassword(auth, email, password)
 }
