@@ -18,18 +18,20 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider()
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider()
+ googleProvider.setCustomParameters({
     prompt: "select_account"
 })
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const db = getFirestore(); 
 // allows us now to tell Firebase when we want to get a document or we want
 // to set a document or anything like that related to our database.
 // This is the database that we're going to pass because this(db) actually 
 // directly points to our database inside of the console.
+
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider)
 
 export const createUserDocumentFromAuth = async (userAuth) => {
     const userDocRef = doc(db, 'users', userAuth.uid);
