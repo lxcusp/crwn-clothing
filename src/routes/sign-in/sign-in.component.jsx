@@ -3,24 +3,26 @@ import { useEffect } from 'react'
 import { getRedirectResult } from "firebase/auth"
 
 const SignIn = () => {
+    //run this useEffect once when the component first-time mounted
+    useEffect(async () => {
+        const response = await getRedirectResult(auth);
+        // console.log(response);
+        if(response) {
+            const userDocRef = await createUserDocumentFromAuth(response.user)
+        }
+    }, [])
+
     const logGoogleUser = async () => {
         const { user } = await signInWithGooglePopup();
         // console.log(response);
         const userDocRef = await createUserDocumentFromAuth(user)
     }
-    const logGoogleRedirectUser = async () => {
-        const { user } = await signInWithGoogleRedirect();
-        //signInWithGoogleRedirect will now take us into this separate 
-        //page where we're asked to sign in with Google. Very similar 
-        //to the pop up, except it's a separate page.
-        console.log({ user });
-        //the user is not getting console.log, but user is now in firebase's Authentication
-    }
+
     return (
         <div>
             <h1>Sign In Page</h1>
             <button onClick={logGoogleUser}>Sign in with Google Popup</button>
-            <button onClick={logGoogleRedirectUser}>Sign in with Google Redirect</button>
+            <button onClick={signInWithGoogleRedirect}>Sign in with Google Redirect</button>
         </div>
     )
 }
