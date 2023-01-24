@@ -24,22 +24,22 @@ const SignUpForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if(password !== confirmPassword) {
+        if (password !== confirmPassword) {
             alert("passwords do not match")
             return
         }
-        try{
+        try {
             // const response = await createAuthUserWithEmailAndPassword(email, password)
             const { user } = await createAuthUserWithEmailAndPassword(email, password)
             // console.log(response);
             await createUserDocumentFromAuth(user, { displayName })
             resetFormFields()
-        } catch(error){
+        } catch (error) {
             console.log(error);
-            if(error.code === 'auth/email-already-in-use') {
+            if (error.code === 'auth/email-already-in-use') {
                 alert('This email is already in use, creation failed.')
             } else {
-            console.log('user creation encountered an error', error);
+                console.log('user creation encountered an error', error);
             }
         }
     }
@@ -48,13 +48,23 @@ const SignUpForm = () => {
         <div>
             <h1>Sign up with your email and password</h1>
             <form action="" onSubmit={handleSubmit}>
-                <FormInput type="text" label="Display Name" required onChange={handleChange} name='displayName' value={displayName} />
+                {/* <FormInput type="text" label="Display Name" required onChange={handleChange} name='displayName' value={displayName} /> */}
+                <FormInput
+                    label="Display Name"
+                    inputOptions={{
+                        type: 'text',
+                        required: true,
+                        onChange: handleChange,
+                        name: 'displayName',
+                        value: displayName
+                    }}
+                />
 
-                <FormInput label="Email" required onChange={handleChange} name='email' value={email} />
+                {/* <FormInput label="Email" required onChange={handleChange} name='email' value={email} />
 
                 <FormInput label="Password" required onChange={handleChange} name='password' value={password} />
 
-                <FormInput label="Confirm Password" required onChange={handleChange} name='confirmPassword' value={confirmPassword} />
+                <FormInput label="Confirm Password" required onChange={handleChange} name='confirmPassword' value={confirmPassword} /> */}
                 <button type="submit">Sign up</button>
             </form>
         </div>
