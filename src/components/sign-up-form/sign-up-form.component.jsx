@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils'
 
 const defaultFormFields = {
     displayName: '',
@@ -9,8 +9,12 @@ const defaultFormFields = {
 }
 
 const SignUpForm = () => {
-    const [formFields, setFormFields] = useState(defaultFormFields)
-    const { displayName, email, password, confirmPassword } = formFields
+    const [formFields, setFormFields] = useState(defaultFormFields);
+    const { displayName, email, password, confirmPassword } = formFields;
+
+    const resetFormFields = () => {
+        setFormFields(setFormFields)
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -19,12 +23,30 @@ const SignUpForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if(password !== confirmPassword) {
+            alert("passwords do not match")
+            return
+        }
+        try{
+            // const response = await createAuthUserWithEmailAndPassword(email, password)
+            const { user } = await createAuthUserWithEmailAndPassword(email, password)
+            // console.log(response);
+            await createUserDocumentFromAuth(user, { displayName })
+            resetFormFields()
+        } catch(error){
+            console.log(error);
+            if(error.code === 'auth/email-already-in-use') {
+                alert('This email is already in use, creation failed.')
+            } else {
+            console.log('user creation encountered an error', error);
+            }
+        }
     }
 
     return (
         <div>
             <h1>Sign up with your email and password</h1>
-            <form action="" onSubmit={() => { }}>
+            <form action="" onSubmit={handleSubmit}>
                 <label htmlFor="">displayName</label>
                 <input type="text" required onChange={handleChange} name='displayName' value={displayName} />
 

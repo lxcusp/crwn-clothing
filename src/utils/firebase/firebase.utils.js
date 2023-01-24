@@ -33,7 +33,7 @@ export const db = getFirestore();
 
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider)
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInfomation ={}) => {
     if(!userAuth) return;
     const userDocRef = doc(db, 'users', userAuth.uid);
     console.log(userDocRef);
@@ -49,7 +49,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         const createdAt = new Date();
 
         try {
-            await setDoc(userDocRef, { displayName, email, createdAt });
+            await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInfomation });
         } catch (error) {
             console.log('error creating the user', error.message);
         }
@@ -64,5 +64,5 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if(!email || !password) return; 
     //if we didnt receive these, dont run the func, the way to protect our code.
     //but the later knowledge Typescript will make it lot easier.
-    return await createAuthUserWithEmailAndPassword(auth, email, password)
+    return await createUserWithEmailAndPassword(auth, email, password)
 }
