@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
-import { Fragment } from 'react'
+import { Fragment, useContext} from 'react'
 // The whole reason of using a fragment is because of reaction rules, 
 // where a component must have a parent, a top level parent containing component.
 // A fragment is useful if you don't actually want to render some specific HTML element.
@@ -8,9 +8,11 @@ import { Fragment } from 'react'
 // So with this fragment, once it actually finally renders, nothing's going to render on the page.
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
 import './navigation.styles.scss'
-
+import { UserContext } from '../../context/user.context'
 
 const Navigation = () => {
+  const { currentUser } = useContext(UserContext)
+  console.log( currentUser );
   return (
     <Fragment>
       <div className='navigation'>
