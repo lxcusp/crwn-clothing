@@ -31,9 +31,20 @@ const SignInForm = () => {
         event.preventDefault();
         try {
             const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            // console.log(response);
             resetFormFields()
-        } catch (error) { }
+        } catch (error) {
+            switch (error.code) {
+                case 'auth/wrong-password':
+                    alert('incorrect password for email')
+                    break;
+                case 'auth/user-not-found':
+                    alert('user is not existed with this email')
+                    break;
+                default:
+                    console.log(error);
+            }
+        }
     }
     return (
         <div className='sign-up-container'>
@@ -44,7 +55,8 @@ const SignInForm = () => {
                 <FormInput label="Password" required onChange={handleChange} name='password' value={password} />
                 <div className='buttons-container'>
                     <Button buttonType='' type="submit">Sign in</Button>
-                    <Button buttonType='google' onClick={signInWithGoogle}>Google sign in</Button>
+                    {/* added the below button type="button" to avoid when using Google Sign In button, also trigger the submit function, since it's inside of the submit form */}
+                    <Button buttonType='google' type="button" onClick={signInWithGoogle}>Google sign in</Button>
                 </div>
             </form>
         </div>
