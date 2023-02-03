@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword} from 'firebase/auth'
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
@@ -65,4 +65,10 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
     //if we didnt receive these, dont run the func, the way to protect our code.
     //but the later knowledge Typescript will make it lot easier.
     return await createUserWithEmailAndPassword(auth, email, password)
+}
+
+//Create another interface layer through a helper function.
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return; 
+    return await signInWithEmailAndPassword(auth, email, password)
 }
